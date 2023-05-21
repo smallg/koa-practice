@@ -1,8 +1,11 @@
 const Koa = require('koa');
-
-const userRouter = require('../router/user.route');
+const bodyParser = require('koa-bodyparser');
 
 const app = new Koa();
+
+app.use(bodyParser());
+
+const userRouter = require('../router/user.route');
 
 app.use(userRouter.routes());
 
