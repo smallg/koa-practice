@@ -28,6 +28,6 @@ const User = seq.define(
   }
 );
 
-User.sync({ force: true, alter: false });
+User.sync({ force: false, alter: false });
 
 module.exports = User;
