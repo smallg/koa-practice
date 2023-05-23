@@ -2,7 +2,11 @@ const { getUserInfo } = require('../service/user.service');
 const {
   userFormateError,
   userAlreadyExistsError,
+  userNotExistsError,
+  userLoginError,
+  userPwdInvalidError,
 } = require('../constant/err.type');
+const bcrypt = require('bcryptjs');
 
 const userValidator = async (ctx, next) => {
   const { username, pwd } = ctx.request.body;
@@ -39,7 +43,41 @@ const registerError = async (ctx, next) => {
   return;
 };
 
+const verifyLogin = async (ctx, next) => {
+  const { username, pwd } = ctx.request.body;
+  try {
+    const res = await getUserInfo({ username });
+    if (!res) {
+      console.error('user not exists', username);
+      ctx.app.emit('error', userNotExistsError, ctx);
+      return;
+    }
+    if (!bcrypt.compareSync(pwd, res.pwd)) {
+      ctx.app.emit('error', userPwdInvalidError, ctx);
+      return;
+    }
+
+  } catch (err) {
+    console.error('user not exists', username);
+    ctx.app.emit('error', userLoginError, ctx);
+    return;
+  }
+  
+  await next();
+};
+
+const cryptPwd = async (ctx, next) => {
+  const { pwd } = ctx.request.body;
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(pwd, salt);
+
+  ctx.request.body.pwd = hash;
+  await next();
+};
+
 module.exports = {
   userValidator,
   verifyUser,
+  verifyLogin,
+  cryptPwd,
 };
