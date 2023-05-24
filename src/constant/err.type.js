@@ -11,7 +11,7 @@ module.exports = {
   },
   registerError: {
     code: '10003',
-    message:'register error',
+    message: 'register error',
     result: '',
   },
   userNotExistsError: {
@@ -27,6 +27,16 @@ module.exports = {
   userPwdInvalidError: {
     code: '10006',
     message: 'user pwd invalid',
+    result: '',
+  },
+  tokenExpiredError: {
+    code: '10101',
+    message: 'token expired',
+    result: '',
+  },
+  invalidToken: {
+    code: '10102',
+    message: 'invalid token',
     result: '',
   }
 };

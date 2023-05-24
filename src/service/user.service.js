@@ -6,11 +6,11 @@ class UserService {
     return res.dataValues;
   }
 
-  async getUserInfo({ id, username, password, isAdmin }) {
+  async getUserInfo({ id, username, pwd, isAdmin }) {
     const whereOpt = {};
     id && Object.assign(whereOpt, { id });
     username && Object.assign(whereOpt, { username });
-    password && Object.assign(whereOpt, { password });
+    pwd && Object.assign(whereOpt, { pwd });
     isAdmin && Object.assign(whereOpt, { isAdmin });
 
     const res = await User.findOne({
@@ -18,6 +18,18 @@ class UserService {
       where: whereOpt,
     });
     return res ? res.dataValues : null;
+  }
+
+  async updateUserInfo({ id, username, pwd, isAdmin }) {
+    const whereOpt = { id };
+    const newUser = {};
+
+    username && Object.assign(newUser, { username });
+    pwd && Object.assign(newUser, { pwd });
+    isAdmin && Object.assign(newUser, { isAdmin });
+
+    const res = await User.update(newUser, { where: whereOpt });
+    return res[0] > 0;
   }
 }
 

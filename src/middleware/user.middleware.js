@@ -69,6 +69,7 @@ const verifyLogin = async (ctx, next) => {
 const cryptPwd = async (ctx, next) => {
   const { pwd } = ctx.request.body;
   const salt = bcrypt.genSaltSync(10);
+  console.log(pwd, salt)
   const hash = bcrypt.hashSync(pwd, salt);
 
   ctx.request.body.pwd = hash;
