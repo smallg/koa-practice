@@ -4,8 +4,7 @@ const {
   getUserInfo,
   updateUserInfo,
 } = require('../service/user.service');
-const { registerError } = require('../app/error.handle');
-const { userLoginError } = require('../constant/err.type');
+const { userLoginError, registerError } = require('../constant/err.type');
 const { JWT_SECRET } = require('../config/config.default');
 
 class UserController {
@@ -31,13 +30,24 @@ class UserController {
     const { username } = ctx.request.body;
     try {
       const { pwd, ...res } = await getUserInfo({ username });
-      ctx.body = {
-        code: 0,
-        message: 'user login successful',
-        result: {
-          token: jwt.sign(res, JWT_SECRET, { expiresIn: '1d' }),
-        },
-      };
+      const token = jwt.sign(res, JWT_SECRET, { expiresIn: '1d' });
+      const tokenRes = await updateUserInfo({ id: res.id, token });
+      console.log('fk', tokenRes);
+      if (tokenRes) {
+        ctx.body = {
+          code: 0,
+          message: 'user login successful',
+          result: {
+            token,
+          },
+        };
+      } else {
+        ctx.body = {
+          code: 1,
+          message: 'login failed',
+          result: '',
+        };
+      }
     } catch (err) {
       console.log(err);
       ctx.app.emit('error', userLoginError, ctx);
@@ -48,7 +58,7 @@ class UserController {
     const id = ctx.state.user.id;
     const pwd = ctx.request.body.pwd;
     console.log(id, pwd);
-    const res = updateUserInfo({ id, pwd });
+    const res = await updateUserInfo({ id, pwd });
     if (res) {
       ctx.body = {
         code: 0,

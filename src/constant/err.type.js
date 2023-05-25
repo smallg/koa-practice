@@ -38,5 +38,15 @@ module.exports = {
     code: '10102',
     message: 'invalid token',
     result: '',
+  },
+  isAdminError: {
+    code: '10103',
+    message: 'not admin error',
+    result: '',
+  },
+  uploadFileError: {
+    code: '10104',
+    message: 'upload file error',
+    result: '',
   }
 };

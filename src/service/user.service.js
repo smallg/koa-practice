@@ -20,13 +20,15 @@ class UserService {
     return res ? res.dataValues : null;
   }
 
-  async updateUserInfo({ id, username, pwd, isAdmin }) {
+  async updateUserInfo({ id, username, pwd, isAdmin, token }) {
     const whereOpt = { id };
     const newUser = {};
 
     username && Object.assign(newUser, { username });
     pwd && Object.assign(newUser, { pwd });
     isAdmin && Object.assign(newUser, { isAdmin });
+    token && Object.assign(newUser, { token });
+    console.log('sb', newUser)
 
     const res = await User.update(newUser, { where: whereOpt });
     return res[0] > 0;

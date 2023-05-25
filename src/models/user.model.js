@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes, Model } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const seq = require('../db/seq');
 
 const User = seq.define(
@@ -21,6 +21,11 @@ const User = seq.define(
       defaultValue: false,
       comment: 'user is admin',
     },
+    token: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      comment: 'user token',
+    }
   },
   {
     // tableName: 'users',
@@ -28,6 +33,6 @@ const User = seq.define(
   }
 );
 
-User.sync({ force: false, alter: false });
+User.sync({ force: false, alter: true });
 
 module.exports = User;
