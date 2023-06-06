@@ -1,30 +1,28 @@
 const { DataTypes } = require('sequelize');
 const seq = require('../db/seq');
 
-const User = seq.define(
-  'user',
+const Goods = seq.define(
+  'goods',
   {
-    username: {
+    good_name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
-      comment: 'user name',
+      comment: 'good name',
     },
-    pwd: {
-      type: DataTypes.CHAR(64),
+    good_price: {
+      type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
       comment: 'user password',
     },
-    isAdmin: {
-      type: DataTypes.BOOLEAN,
+    good_num: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: false,
-      comment: 'user is admin',
+      comment: 'good num',
     },
-    token: {
+    good_img: {
       type: DataTypes.STRING,
       allowNull: true,
-      comment: 'user token',
+      comment: 'good image url',
     }
   },
   {
@@ -33,6 +31,6 @@ const User = seq.define(
   }
 );
 
-User.sync({ force: false, alter: false });
+Goods.sync({ force: false, alter: false });
 
-module.exports = User;
+module.exports = Goods;

@@ -48,5 +48,25 @@ module.exports = {
     code: '10104',
     message: 'upload file error',
     result: '',
+  },
+  unSupportFileTypeError: {
+    code: '10105',
+    message: 'not support file type error',
+    result: '',
+  },
+  goodFormatError: {
+    code: '10106',
+    message: 'bad format error',
+    result: '',
+  },
+  publishGoodError: {
+    code: '10107',
+    message: 'publish bad error',
+    result: '',
+  },
+  invalidGoodId: {
+    code: '10108',
+    message: 'invalid good id',
+    result: '',
   }
 };
