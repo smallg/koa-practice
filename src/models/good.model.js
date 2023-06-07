@@ -28,6 +28,7 @@ const Goods = seq.define(
   {
     // tableName: 'users',
     // timestamps: false,
+    paranoid: true,
   }
 );
 

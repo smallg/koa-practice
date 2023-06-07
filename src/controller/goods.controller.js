@@ -4,8 +4,10 @@ const {
   unSupportFileTypeError,
   publishGoodError,
   invalidGoodId,
+  removeGoodError,
+  restoreGoodError,
 } = require('../constant/err.type');
-const { createGood, updateGood } = require('../service/good.service');
+const { createGood, updateGood, removeGood, restoreGood, findGoods } = require('../service/good.service');
 
 class GoodsController {
   async upload(ctx) {
@@ -71,6 +73,56 @@ class GoodsController {
     } catch (error) {
       console.error(error);
       return ctx.app.emit('error', publishGoodError, ctx);
+    }
+  }
+
+  async remove(ctx) {
+    try {
+      const res = await removeGood(ctx.params.id);
+      if (res) {
+        ctx.body = {
+          code: 0,
+          message: 'remove success',
+          result: res,
+        }
+      } else {
+        return ctx.app.emit('error', removeGoodError, ctx);
+      }
+      
+    } catch (error) {
+      
+    }
+  }
+
+  async restore(ctx) {
+    try {
+      const res = await restoreGood(ctx.params.id);
+      if (res) {
+        ctx.body = {
+          code: 0,
+          message: 'restore success',
+          result: res,
+        }
+      } else {
+        return ctx.app.emit('error', restoreGoodError, ctx);
+      }
+      
+    } catch (error) {
+      
+    }
+  }
+
+  async findAll(ctx) {
+    const { pageNum = 1, pageSize = 10 } = ctx.request.query;
+    try {
+      const res = await findGoods(pageNum, pageSize);
+      ctx.body = {
+        code: 0,
+        message: 'get good list success',
+        result: res,
+      }
+    } catch (error) {
+      
     }
   }
 }

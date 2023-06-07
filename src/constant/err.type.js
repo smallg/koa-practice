@@ -68,5 +68,15 @@ module.exports = {
     code: '10108',
     message: 'invalid good id',
     result: '',
+  },
+  removeGoodError: {
+    code: '10109',
+    message: 'remove good error',
+    result: '',
+  },
+  restoreGoodError: {
+    code: '10110',
+    message: 'restore good error',
+    result: '',
   }
 };

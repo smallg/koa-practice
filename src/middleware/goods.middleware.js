@@ -1,4 +1,5 @@
-const { goodFormatError } = require('../constant/err.type');
+const { goodFormatError, invalidGoodId } = require('../constant/err.type');
+const { findGood } = require('../service/good.service');
 
 const validator = async (ctx, next) => {
   try {
@@ -29,6 +30,17 @@ const validator = async (ctx, next) => {
   await next();
 };
 
+const validatorGoodId = async (ctx, next) => {
+  const res = await findGood(ctx.request.body.good_id);
+  if (res) {
+    await next();
+  } else {
+    return ctx.app.emit('error', invalidGoodId, ctx);
+  }
+  
+};
+
 module.exports = {
-  validator
+  validator,
+  validatorGoodId
 };
