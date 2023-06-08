@@ -78,5 +78,25 @@ module.exports = {
     code: '10110',
     message: 'restore good error',
     result: '',
-  }
+  },
+  cartFormatError: {
+    code: '10111',
+    message: 'cart format error',
+    result: '',
+  },
+  addressFormatError: {
+    code: '10112',
+    message: 'address format error',
+    result: '',
+  },
+  invalidAddressError: {
+    code: '10113',
+    message: 'invalid address',
+    result: '',
+  },
+  orderFormatError: {
+    code: '10114',
+    message: 'order format error',
+    result: '',
+  },
 };

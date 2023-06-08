@@ -9,14 +9,17 @@ const errorHandler = require('./error.handle');
 const router = require('../router/index');
 const app = new Koa();
 
-app.use(koaBody({
-  multipart: true,
-  formidable: {
+app.use(
+  koaBody({
+    multipart: true,
+    formidable: {
       maxFileSize: 50 * 1024 * 1024 * 1024,
       keepExtensions: true,
       uploadDir: path.join(__dirname, '../uploads'),
     },
-}));
+    parsedMethods: ['POST', 'PUT', 'PATCH', 'DELETE'],
+  })
+);
 
 app.use(parameter(app));
 
@@ -26,7 +29,7 @@ app.use(parameter(app));
 // app.use(userRouter.routes());
 // app.use(goodsRouter.routes());
 app.use(koaStatic(path.join(__dirname, '../uploads')));
-app.use(router.routes())
+app.use(router.routes());
 app.use(router.allowedMethods());
 
 app.on('error', errorHandler);

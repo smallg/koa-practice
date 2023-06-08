@@ -45,6 +45,30 @@ class CartService {
       list: rows,
     };
   }
+
+  async updateCarts(params) {
+    const { id, num, selected } = params;
+    const res = await Cart.findByPk(id);
+    if (!res) return '';
+    num !== undefined ? (res.num = num) : '';
+    selected !== undefined ? (res.selected = selected) : '';
+
+    return await res.save();
+  }
+
+  async removeCarts(ids) {
+    return await Cart.destroy({
+      where: {
+        id: {
+          [Op.in]: ids,
+        },
+      },
+    });
+  }
+
+  async selectOrUnselectAll(user_id, selectedAll) {
+    return await Cart.update({ selected: selectedAll }, { where: { user_id } });
+  }
 }
 
 module.exports = new CartService();
